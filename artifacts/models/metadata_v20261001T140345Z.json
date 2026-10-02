@@ -1,0 +1,24 @@
+{
+  "model_version": "v20261001T140345Z",
+  "trained_at": "20261001T140345Z",
+  "feature_names": [
+    "air_temperature_[k]",
+    "process_temperature_[k]",
+    "rotational_speed_[rpm]",
+    "torque_[nm]",
+    "tool_wear_[min]"
+  ],
+  "metrics": {
+    "roc_auc": 0.9688032821824382,
+    "precision": 0.8431372549019608,
+    "recall": 0.6323529411764706,
+    "f1": 0.7226890756302521,
+    "confusion_matrix": [
+      1924,
+      8,
+      25,
+      43
+    ]
+  },
+  "random_state": 42
+}

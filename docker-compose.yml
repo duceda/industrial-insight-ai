@@ -1,0 +1,38 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: industrial-insight-backend
+    ports:
+      - "8000:8000"
+    environment:
+      MODEL_PATH: /app/artifacts/models/model_v20261001T140345Z.joblib
+      CORS_ORIGINS: http://localhost,http://localhost:80,http://frontend,http://127.0.0.1,http://127.0.0.1:80
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health').read()"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - industrial-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost/api
+    container_name: industrial-insight-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - industrial-net
+
+networks:
+  industrial-net:
+    driver: bridge
